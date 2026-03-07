@@ -71,11 +71,8 @@ fig.update_layout(
         )
     ],
     legend=dict(
-        orientation="h",
-        y=-0.2,
+        y=0.9,
         yanchor="top",
-        x=0.5,
-        xanchor="center",
         itemclick="toggle",
         itemdoubleclick=False
     ),
