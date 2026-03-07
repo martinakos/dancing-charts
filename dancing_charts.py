@@ -29,9 +29,7 @@ colors = [
 
 fig = go.Figure()
 
-# To fix the interaction while keeping a clean legend, we'll use actual traces 
-# for "Show all" and "Clear all" but link them to a custom JS-like behavior 
-# through Plotly's updatemenu buttons, but styled as labels.
+num_dances = len(dances_data)
 
 for i, (name, func) in enumerate(dances_data):
     y = func(x)
@@ -39,34 +37,29 @@ for i, (name, func) in enumerate(dances_data):
         x=x, y=y,
         mode='lines',
         name=name,
-        line=dict(color=colors[i], width=1.2), # Thinner lines
+        line=dict(color=colors[i], width=1.2),
         hoverinfo="x+y+name",
         visible=True
     ))
 
-# This is the single, working column menu. No redundant buttons.
-# Positioned exactly where the legend headers would be.
 fig.update_layout(
     updatemenus=[
         dict(
             type="buttons",
-            direction="down",
+            direction="right",
             showactive=False,
-            x=1.02, 
-            xanchor="left",
-            y=1.0, 
+            x=0.5,
+            xanchor="center",
+            y=1.18,
             yanchor="top",
-            pad={"t": 0, "b": 0},
-            bgcolor="rgba(0,0,0,0)",
-            bordercolor="rgba(0,0,0,0)",
-            font=dict(size=14, color="black"),
+            font=dict(size=12),
             buttons=[
                 dict(label="Show all",
                      method="restyle",
-                     args=[{"visible": [True] * len(dances_data)}]),
+                     args=[{"visible": [True] * num_dances}]),
                 dict(label="Clear all",
                      method="restyle",
-                     args=[{"visible": ["legendonly"] * len(dances_data)}]),
+                     args=[{"visible": ["legendonly"] * num_dances}]),
             ]
         )
     ],
@@ -81,25 +74,36 @@ fig.update_layout(
     yaxis_title="Complexity Level",
     template="plotly_white",
     hovermode="x unified",
-    margin=dict(t=100, r=180)
+    margin=dict(t=130, r=180)
 )
 
 fig.show()
 fig.write_html("index.html", include_plotlyjs=True, full_html=True,
-               config={"responsive": True},
-               post_script="""
-var gd = document.getElementsByClassName('plotly-graph-div')[0];
-gd.style.width = '100vw';
-gd.style.height = '100vh';
-window.addEventListener('resize', function() { Plotly.Plots.resize(gd); });
-Plotly.Plots.resize(gd);
-""")
+               config={"responsive": True})
 
-# Inject viewport meta tag for mobile
+# Inject viewport meta tag and legend click handler directly into HTML
 with open("index.html", "r") as f:
     html = f.read()
+
 html = html.replace("<head>",
     '<head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">'
     '<style>body { margin: 0; overflow: hidden; }</style>')
+
+fullscreen_script = """
+<script>
+(function() {
+    var gd = document.getElementsByClassName('plotly-graph-div')[0];
+    if (gd) {
+        gd.style.width = '100vw';
+        gd.style.height = '100vh';
+        window.addEventListener('resize', function() { Plotly.Plots.resize(gd); });
+        Plotly.Plots.resize(gd);
+    }
+})();
+</script>
+"""
+
+html = html.replace("</body>", fullscreen_script + "</body>")
+
 with open("index.html", "w") as f:
     f.write(html)
