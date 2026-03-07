@@ -88,5 +88,5 @@ fig.update_layout(
 )
 
 fig.show()
-fig.write_html("dancing_charts.html", include_plotlyjs=True, full_html=True,
+fig.write_html("index.html", include_plotlyjs=True, full_html=True,
                config={"responsive": True})
