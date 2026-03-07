@@ -71,8 +71,11 @@ fig.update_layout(
         )
     ],
     legend=dict(
-        y=0.9, 
+        orientation="h",
+        y=-0.2,
         yanchor="top",
+        x=0.5,
+        xanchor="center",
         itemclick="toggle",
         itemdoubleclick=False
     ),
@@ -81,10 +84,9 @@ fig.update_layout(
     yaxis_title="Complexity Level",
     template="plotly_white",
     hovermode="x unified",
-    width=1000,
-    height=800,
     margin=dict(t=100, r=180)
 )
 
 fig.show()
-fig.write_html("dancing_charts.html", include_plotlyjs=True, full_html=True)
+fig.write_html("dancing_charts.html", include_plotlyjs=True, full_html=True,
+               config={"responsive": True})
