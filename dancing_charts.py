@@ -89,4 +89,20 @@ fig.update_layout(
 
 fig.show()
 fig.write_html("index.html", include_plotlyjs=True, full_html=True,
-               config={"responsive": True})
+               config={"responsive": True},
+               post_script="""
+var gd = document.getElementsByClassName('plotly-graph-div')[0];
+gd.style.width = '100vw';
+gd.style.height = '100vh';
+window.addEventListener('resize', function() { Plotly.Plots.resize(gd); });
+Plotly.Plots.resize(gd);
+""")
+
+# Inject viewport meta tag for mobile
+with open("index.html", "r") as f:
+    html = f.read()
+html = html.replace("<head>",
+    '<head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">'
+    '<style>body { margin: 0; overflow: hidden; }</style>')
+with open("index.html", "w") as f:
+    f.write(html)
