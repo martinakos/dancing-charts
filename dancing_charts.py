@@ -203,7 +203,7 @@ fig.update_layout(
         itemdoubleclick=False,
         title=dict(text="<i>Click on dance label to show/hide</i>", font=dict(size=11, color="#888"))
     ),
-    title="Dance Complexity: Learning Curves",
+    title=dict(text="Dance Complexity: Learning Curves", font=dict(size=28)),
     xaxis_title="Hours of Practice",
     yaxis=dict(title="Complexity Level", range=[0, max_y * 1.05], fixedrange=False),
     template="plotly_white",
