@@ -211,6 +211,9 @@ fig.update_layout(
     margin=dict(t=130, r=180, b=40)
 )
 
+# Generate preview image for social media sharing
+fig.write_image("preview.png", width=1200, height=630, scale=2)
+
 # Get just the chart div (no full HTML wrapper) so we control the page structure
 chart_html = fig.to_html(include_plotlyjs=True, full_html=False,
                          config={"responsive": True})
@@ -223,6 +226,12 @@ index_html = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Dance Complexity: Learning Curves">
+<meta property="og:description" content="Interactive comparison of learning curves for 15 partner dances — from Merengue to Argentine Tango.">
+<meta property="og:image" content="https://martinakos.github.io/dancing-charts/preview.png">
+<meta property="og:url" content="https://martinakos.github.io/dancing-charts/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <title>Dance Complexity: Learning Curves</title>
 <style>
 html, body { margin: 0; padding: 0; height: auto !important; overflow: auto !important; }
@@ -256,7 +265,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helve
 
 <div style="padding: 0 40px 40px 40px;">
 
-<h2 style="border-bottom: 2px solid #ddd; padding-bottom: 8px;">Dance Progression Summary</h2>
+<h2 style="border-bottom: 2px solid #ddd; padding-bottom: 8px;">Learning Difficulty Summary</h2>
 
 <div style="overflow-x: auto;">
 <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
