@@ -200,9 +200,10 @@ fig.update_layout(
         y=0.9,
         yanchor="top",
         itemclick="toggle",
-        itemdoubleclick=False
+        itemdoubleclick=False,
+        title=dict(text="<i>Click on dance label to show/hide</i>", font=dict(size=11, color="#888"))
     ),
-    title="Dance Complexity Tool",
+    title="Dance Complexity: Learning Curves",
     xaxis_title="Hours of Practice",
     yaxis=dict(title="Complexity Level", range=[0, max_y * 1.05], fixedrange=False),
     template="plotly_white",
@@ -222,7 +223,7 @@ index_html = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dance Complexity Tool</title>
+<title>Dance Complexity: Learning Curves</title>
 <style>
 html, body { margin: 0; padding: 0; height: auto !important; overflow: auto !important; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; }
