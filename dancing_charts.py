@@ -207,7 +207,7 @@ fig.update_layout(
     yaxis=dict(title="Complexity Level", range=[0, max_y * 1.05], fixedrange=False),
     template="plotly_white",
     hovermode="x unified",
-    margin=dict(t=130, r=180)
+    margin=dict(t=130, r=180, b=40)
 )
 
 # Get just the chart div (no full HTML wrapper) so we control the page structure
@@ -226,7 +226,7 @@ index_html = """<!DOCTYPE html>
 <style>
 html, body { margin: 0; padding: 0; height: auto !important; overflow: auto !important; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; }
-#chart-container { width: 100%; height: calc(100vh - 80px); }
+#chart-container { width: 100%; height: calc(100vh - 80px); margin-bottom: 0; }
 #chart-container .plotly-graph-div { height: 100% !important; width: 100% !important; }
 #chart-container .js-plotly-plot, #chart-container .plot-container { height: 100% !important; }
 </style>
@@ -251,7 +251,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helve
 })();
 </script>
 
-<div style="padding: 20px 40px 40px 40px;">
+<div style="padding: 0 40px 40px 40px;">
 
 <h2 style="border-bottom: 2px solid #ddd; padding-bottom: 8px;">Dance Progression Summary</h2>
 
