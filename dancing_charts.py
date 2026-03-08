@@ -230,6 +230,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helve
 #chart-container .plotly-graph-div { height: 100% !important; width: 100% !important; }
 #chart-container .js-plotly-plot, #chart-container .plot-container { height: 100% !important; }
 </style>
+<script data-goatcounter="https://dancing-charts.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <div id="chart-container">
