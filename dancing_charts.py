@@ -12,14 +12,16 @@ def sigmoid(x, center, steepness):
 # Each dance modeled with: floor + phase1 + phase2 + ... using sigmoids
 # Parameters based on research: entry difficulty, plateau timings, ceiling
 dances_data = [
-    # Bachata: easy start (2), quick basics (50h), body movement phase (200h),
-    # musicality (500h), ceiling ~7
+    # Bachata: easy start, quick basics (25h), body movement (150h),
+    # musicality across derecho/majao/mambo sections (500h),
+    # multi-style fusion mastery — Dominican footwork + Sensual body waves +
+    # Moderna turns, switching within a single song (1200h). Ceiling ~9
     ("Bachata", lambda x:
         1.0
         + 1.5 * sigmoid(x, 25, 0.08)     # basics click fast
         + 2.0 * sigmoid(x, 150, 0.012)    # turn patterns + body movement
-        + 2.0 * sigmoid(x, 500, 0.005)    # musicality + styling
-        + 1.5 * sigmoid(x, 1200, 0.003)   # sub-style mastery
+        + 2.5 * sigmoid(x, 500, 0.005)    # musicality + styling (derecho/majao/mambo)
+        + 2.0 * sigmoid(x, 1200, 0.003)   # multi-style fusion (Dominican/Sensual/Moderna)
     ),
 
     # Salsa LA/NY: moderate start, infamous intermediate plateau ~200h, high ceiling ~9
@@ -140,14 +142,14 @@ dances_data = [
     ),
 
     # Ballroom Standard: moderate social entry, very high competitive ceiling ~9.5
-    # Sinusoidal component represents the multi-dance challenge (waltz/foxtrot/quickstep)
+    # Multi-dance learning (waltz/foxtrot/quickstep/VW/tango) slows progression but
+    # complexity never decreases — removed sinusoidal oscillation (unsupported by sources)
     ("Ballroom (Standard)", lambda x:
         2.0
         + 2.0 * sigmoid(x, 40, 0.05)      # basic waltz/foxtrot
         + 2.0 * sigmoid(x, 200, 0.007)    # bronze syllabus
         + 2.5 * sigmoid(x, 600, 0.004)    # silver/gold, body mechanics
         + 2.5 * sigmoid(x, 1500, 0.002)   # open choreography, championship
-        + 0.4 * np.sin(x / 80)            # multi-dance complexity oscillation
     ),
 ]
 
@@ -316,9 +318,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helve
     <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; white-space: nowrap;">Bachata</td>
     <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">Easy</td>
     <td style="padding: 10px; border-bottom: 1px solid #eee;">Accelerates at body movement phase</td>
-    <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">~8</td>
+    <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">~9</td>
     <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">20&ndash;30h</td>
-    <td style="padding: 10px; border-bottom: 1px solid #eee;">Simple side-to-side basic clicks within a few classes. By ~50h, comfortable at socials with basic turns. ~150h: body movement and isolations become the focus (especially sensual bachata). ~500h: musicality and musical interpretation. Ceiling depends on sub-style &mdash; Dominican (fast footwork), Sensual (body waves), or Moderna (complex turn patterns).</td>
+    <td style="padding: 10px; border-bottom: 1px solid #eee;">Simple side-to-side basic clicks within a few classes. By ~50h, comfortable at socials with basic turns. ~150h: body movement and isolations become the focus (especially sensual bachata). ~500h: musicality across song sections (derecho, majao, mambo) each demanding different movement. ~1200h: multi-style fusion mastery &mdash; modern social dancing requires switching between Dominican (fast footwork), Sensual (body waves), and Moderna (complex turn patterns) within a single song.</td>
 </tr>
 <tr style="background: #fafafa;">
     <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; white-space: nowrap;">Blues</td>
@@ -438,6 +440,132 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helve
     <li>Leader vs. follower progression differs significantly and is not modeled separately.</li>
     <li>Individual learning rates vary enormously based on prior dance experience, natural aptitude, quality of instruction, practice frequency, and other factors.</li>
     <li>The curves model <em>available complexity</em> (what the dance offers to learn), not individual skill level (which depends on the dancer).</li>
+</ul>
+
+<h2 style="border-bottom: 2px solid #ddd; padding-bottom: 8px; margin-top: 40px;">References</h2>
+<p>The following sources were consulted to determine learning phases, milestone timings, entry difficulty, and complexity ceilings for each dance. Where a source informed multiple dances, it is listed under the primary dance it was used for.</p>
+
+<h3>General &amp; Cross-Dance</h3>
+<ul>
+    <li><a href="https://blog.arthurmurraylive.com/arthur-murray-curve-of-learning" target="_blank">Arthur Murray &mdash; Dance Progress Explained: The Curve of Learning</a> &mdash; four stages of dance learning; plateau descriptions; general ballroom progression timelines.</li>
+    <li><a href="https://dancelouisville.com/how-many-lessons-to-learn-to-dance/" target="_blank">Dance Louisville &mdash; Learning to Ballroom Dance: How Long Does It Take?</a> &mdash; 10-hour breakthrough, 20-hour functional dancing milestone.</li>
+    <li><a href="https://ask.metafilter.com/123017/What-is-the-most-difficult-social-dance" target="_blank">Ask MetaFilter &mdash; What Is the Most Difficult Social Dance?</a> &mdash; community ranking of partner dance difficulty; relative difficulty changes with proficiency level.</li>
+    <li><a href="https://www.watchmojo.com/articles/top-10-hardest-partner-dances-to-pull-off" target="_blank">WatchMojo &mdash; Top 10 Hardest Partner Dances to Pull Off</a> &mdash; cross-dance difficulty ranking with Argentine Tango at the top.</li>
+</ul>
+
+<h3>Bachata</h3>
+<ul>
+    <li><a href="https://bachataonlinecourse.com/how-long-does-it-take-to-learn-bachata-a-timeline-for-beginners/" target="_blank">Bachata Online &mdash; How Long Does It Take to Learn Bachata?</a> &mdash; beginner timeline, basics in a few weeks, body movement phase, first-year milestones.</li>
+    <li><a href="https://sensualmovementusa.com/how-to-dance-bachata/" target="_blank">Sensual Movement USA &mdash; How to Dance Bachata: A Beginner&rsquo;s Guide</a> &mdash; sensual bachata body movement progression.</li>
+    <li><a href="https://www.classpop.com/magazine/how-to-dance-bachata" target="_blank">Classpop &mdash; How to Dance Bachata (2025 Guide)</a> &mdash; structured learning timeline and sub-style descriptions.</li>
+    <li><a href="https://www.jettence.com/blog/bachata-styles-and-why-you-should-learn-them-all/" target="_blank">Jettence &mdash; Different Bachata Styles and Why You Should Learn Them All</a> &mdash; multi-style switching expected at socials; &ldquo;inappropriate to dance sensual when Dominican music is playing&rdquo;; Urbana/Moderna described as &ldquo;very demanding.&rdquo;</li>
+    <li><a href="https://www.djvampbachata.com/open-level-listening-comprehension" target="_blank">DJ Vamp &mdash; Principles of Bachata Music</a> &mdash; derecho/majao/mambo song sections; each polyrhythm requires different dance approach.</li>
+    <li><a href="https://www.fortheloveofbachata.com/blog-1/bachatastyles" target="_blank">For the Love of Bachata &mdash; Bachata Styles Breakdown</a> &mdash; Dominican, Moderna, Sensual style definitions and fusion complexity.</li>
+</ul>
+
+<h3>Salsa (LA/NY)</h3>
+<ul>
+    <li><a href="https://www.salsaforums.com/threads/how-long-have-you-considered-yourself-beginner-intermediate-advanced-other-milestones.19249/" target="_blank">SalsaForums &mdash; How Long Have You Considered Yourself Beginner/Intermediate/Advanced?</a> &mdash; dancer self-reports on progression timelines; intermediate plateau experiences.</li>
+    <li><a href="https://rfdance.com/blog/how-long-does-it-take-to-learn-salsa-timelines-tips/" target="_blank">RF Dance &mdash; How Long Does It Take to Learn Salsa? Timelines &amp; Tips</a> &mdash; beginner to intermediate timeline (1&ndash;2 years with regular practice).</li>
+    <li><a href="https://www.dance-forums.com/threads/how-long-did-it-take-you-to-learn-salsa.5757/" target="_blank">Dance-Forums.com &mdash; How Long Did It Take You to Learn Salsa?</a> &mdash; community timelines; plateau at 6&ndash;7 months; breakthrough after social dancing.</li>
+    <li><a href="https://www.moversandshakersdance.com/how-long-does-it-take-to-get-good-at-salsa" target="_blank">Movers &amp; Shakers &mdash; How Long Does It Take to Get Good at Salsa?</a> &mdash; stage-by-stage progression.</li>
+</ul>
+
+<h3>Cuban Salsa (Casino)</h3>
+<ul>
+    <li><a href="https://www.dancelifemap.com/cuban-salsa-how-it-differs-from-linear-salsa-styles/" target="_blank">DanceLifeMap &mdash; Cuban Salsa: How It Differs from Linear Salsa Styles</a> &mdash; easier entry than linear salsa; circular movement more forgiving; simpler footwork.</li>
+    <li><a href="https://thedancedojo.com/salsa-dance-terms/cuban-salsa-cubana/" target="_blank">The Dance Dojo &mdash; Cuban Salsa (Salsa Cubana): Casino &amp; Rueda de Casino</a> &mdash; rueda format, Afro-Cuban influences.</li>
+    <li><a href="https://www.salsaforums.com/threads/learning-rueda-casino-cuban-salsa-trouble-leading-though-when-social-dancing.42781/" target="_blank">SalsaForums &mdash; Learning Rueda Casino / Cuban Salsa</a> &mdash; transition from rueda to social partner dancing challenges.</li>
+</ul>
+
+<h3>Argentine Tango</h3>
+<ul>
+    <li><a href="https://www.ultimatetango.com/blog/beyond-steps-the-true-journey-of-learning-argentine-tango" target="_blank">Ultimate Tango &mdash; Beyond Steps: The True Journey of Learning Argentine Tango</a> &mdash; 18&ndash;24 month minimum for meaningful mastery; &ldquo;competence crisis&rdquo; at ~6 months; embrace difficulty.</li>
+    <li><a href="https://tangocanada.ca/how-long-does-it-take-to-learn-argentine-tango/" target="_blank">Tango Canada Academy &mdash; How Long Does It Take to Learn Argentine Tango?</a> &mdash; 8&ndash;12 weeks for fundamentals; 6&ndash;12 months for ochos/molinetes; 18+ months for advanced expression.</li>
+    <li><a href="http://learn-to-tango.com/blog/5-levels-of-learning-tango-how-hard-is-learning-tango/" target="_blank">Learn to Tango &mdash; 5 Levels: How Hard Is It to Learn Tango?</a> &mdash; five stages of competence; 10,000+ hours for mastery; reflective competence stage.</li>
+    <li><a href="https://www.dance-forums.com/threads/is-it-possible-for-a-woman-to-become-proficient-in-dancing-argentine-tango-in-1-2-years.49389/" target="_blank">Dance-Forums.com &mdash; Proficiency in Argentine Tango in 1&ndash;2 Years?</a> &mdash; community consensus on high entry barrier and long timeline.</li>
+    <li><a href="https://www.quora.com/Why-is-Argentine-Tango-so-difficult" target="_blank">Quora &mdash; Why Is Argentine Tango So Difficult?</a> &mdash; weight placement, frame, lead-follow precision demands from day one.</li>
+</ul>
+
+<h3>Lindy Hop</h3>
+<ul>
+    <li><a href="https://bostonlindyhop.com/faq/" target="_blank">Boston Lindy Hop &mdash; FAQ</a> &mdash; swing-out as fundamental 8-count move; 6-week series structure; rotation accelerates learning.</li>
+    <li><a href="https://www.dance-forums.com/threads/lindy-hop-improving-the-swingout.30967/" target="_blank">Dance-Forums.com &mdash; Lindy Hop: Improving the Swing-Out</a> &mdash; &ldquo;5 minutes to learn, 3 years to do it reasonably well&rdquo;; technique refinement is lifelong.</li>
+    <li><a href="https://www.quora.com/What-are-some-of-the-hardest-moves-in-swing-dancing-to-learn" target="_blank">Quora &mdash; What Are the Hardest Moves in Swing Dancing?</a> &mdash; swing-out simultaneously the basic and hardest move.</li>
+</ul>
+
+<h3>Kizomba</h3>
+<ul>
+    <li><a href="https://www.salsadancela.com/post/the-sensual-world-of-kizomba-dance-a-comprehensive-beginner-s-guide" target="_blank">Salsa Dance LA &mdash; The Sensual World of Kizomba Dance: Beginner&rsquo;s Guide</a> &mdash; accessible first partner dance; slow tempo aids beginners.</li>
+    <li><a href="https://www.goandance.com/en/blog/post/114/9-differences-between-kizomba-and-urban-kizz" target="_blank">Go&amp;Dance &mdash; 9 Differences Between Kizomba and Urban Kiz</a> &mdash; Urban Kiz adds stops, direction changes, acrobatics; significantly higher ceiling.</li>
+    <li><a href="https://www.chocolatekizomba.com/kizomba-top-tips/kizomba-vs-urban-kiz-how-to-spot-the-difference-and-find-kizomba-classes" target="_blank">Chocolate Kizomba &mdash; Kizomba vs. Urban Kiz</a> &mdash; traditional vs. contemporary complexity comparison.</li>
+</ul>
+
+<h3>Brazilian Zouk</h3>
+<ul>
+    <li><a href="https://zouksidedown.wordpress.com/2015/07/10/letter-to-a-beginner/" target="_blank">ZoukSide Down &mdash; Letter to a Beginner</a> &mdash; &ldquo;beginner&rsquo;s hell&rdquo; phase; frustration and fumbling in early stages; immediate social dancing recommended.</li>
+    <li><a href="https://zouksidedown.wordpress.com/2014/05/04/the-journey-of-a-dancer-series-week-two-the-key-to-becoming-a-great-zouk-leader/" target="_blank">ZoukSide Down &mdash; The Journey of a Dancer: Key to Becoming a Great Zouk Leader</a> &mdash; leader development stages; long-term growth trajectory.</li>
+    <li><a href="https://zoukology.com/brazilian-zouk-a-demanding-physical-art-casi/" target="_blank">Zoukology &mdash; Brazilian Zouk: A Demanding Physical Art</a> &mdash; physical demands; head movements as defining advanced feature.</li>
+    <li><a href="https://twoleftfeetpodcast.medium.com/dealing-with-stress-frustration-in-brazilian-zouk-class-a328d2d73c28" target="_blank">Two Left Feet Podcast &mdash; Dealing with Stress/Frustration in Brazilian Zouk Class</a> &mdash; beginner&rsquo;s hell lasting longer than in other styles.</li>
+</ul>
+
+<h3>West Coast Swing</h3>
+<ul>
+    <li><a href="https://www.swingliteracy.com/category/about-dancing/the-learning-curve/" target="_blank">SwingLiteracy &mdash; The Learning Curve (article series)</a> &mdash; WCS learning progression; steep initial curve; musical interpretation depth.</li>
+    <li><a href="https://www.westcoastswingonline.com/10-biggest-struggles-of-west-coast-swing-dancers/" target="_blank">WCS Online &mdash; 10 Biggest Struggles of WCS Dancers</a> &mdash; &ldquo;WCS is a VERY difficult dance to be really good at&rdquo;; timing, musicality, and confidence challenges.</li>
+    <li><a href="https://www.westcoastswingonline.com/the-challenge-of-west-coast-swing/" target="_blank">WCS Online &mdash; 7 Challenges of West Coast Swing</a> &mdash; six-beat pattern complexity; open position demands; follower skill requirements.</li>
+    <li><a href="https://www.swingliteracy.com/tough-love-read-at-your-own-risk/" target="_blank">SwingLiteracy &mdash; Tough Love: Read at Your Own Risk</a> &mdash; education and practice requirements for WCS progression.</li>
+</ul>
+
+<h3>Cha-Cha (Ballroom/Latin)</h3>
+<ul>
+    <li><a href="https://studioaccessballroom.com/latin-and-ballroom-dance-levels/" target="_blank">Access Ballroom &mdash; Latin and Ballroom Dance Levels</a> &mdash; Bronze/Silver/Gold syllabus structure; Cuban motion introduced at Bronze 2&ndash;3.</li>
+    <li><a href="https://www.centralhome.com/ballroomcountry/cha-cha-syll.htm" target="_blank">CentralHome &mdash; Cha Cha Syllabus (International Latin)</a> &mdash; complete syllabus breakdown by level.</li>
+    <li><a href="https://delta.dance/2020/06/video-intermediate-chacha/" target="_blank">Delta.Dance &mdash; Intermediate Cha Cha Video Program</a> &mdash; intermediate technique focus and progression.</li>
+</ul>
+
+<h3>Modern Jive / Ceroc</h3>
+<ul>
+    <li><a href="https://en.wikipedia.org/wiki/Modern_Jive" target="_blank">Wikipedia &mdash; Modern Jive</a> &mdash; overview; &ldquo;simplest of all partner dances&rdquo;; no specific footwork.</li>
+    <li><a href="https://whataboutdance.com/how-easy-is-modern-jive-dance/" target="_blank">What About Dance &mdash; How Easy Is Modern Jive Dance?</a> &mdash; dancing within half an hour; limited ceiling for advanced development.</li>
+    <li><a href="https://www.ceroc.com/24/3441/learn-to-jive-dance-dance-classes-lessons" target="_blank">Ceroc UK &mdash; Learn to Jive Dance</a> &mdash; first-night experience; move-per-week progression.</li>
+</ul>
+
+<h3>Merengue</h3>
+<ul>
+    <li><a href="https://www.classpop.com/magazine/how-to-dance-cumbia" target="_blank">Classpop &mdash; How to Dance Cumbia (2025 Guide)</a> &mdash; merengue as gateway dance; simplest Latin rhythm.</li>
+    <li><a href="https://www.salsavida.com/articles/latin-dances/" target="_blank">Salsa Vida &mdash; Latin Dances List: 40 Popular Styles</a> &mdash; merengue described as the easiest Latin dance; marching basic.</li>
+</ul>
+
+<h3>Cumbia</h3>
+<ul>
+    <li><a href="https://www.classpop.com/magazine/how-to-dance-cumbia" target="_blank">Classpop &mdash; How to Dance Cumbia (2025 Guide)</a> &mdash; beginner-friendly; regional variations (Colombian, Mexican, Argentine).</li>
+    <li><a href="https://somoloco.com/colombian-salsa-whats-it-all-about/" target="_blank">Somoloco &mdash; Colombian Salsa: What&rsquo;s It All About</a> &mdash; cumbia influence on Cali-style salsa.</li>
+    <li><a href="https://dancemagazine.com/cumbia-the-new-old-latin-dance/" target="_blank">Dance Magazine &mdash; Cumbia: The New/Old Latin Dance</a> &mdash; cultural history and regional spread.</li>
+</ul>
+
+<h3>Blues</h3>
+<ul>
+    <li><a href="https://thebluesroom.com/mastering-the-basics-why-essential-skills-are-the-foundation-of-your-blues-dance-journey/" target="_blank">The Blues Room &mdash; Mastering the Basics: Foundation of Blues Dance</a> &mdash; foundational technique; close embrace importance.</li>
+    <li><a href="https://dirtcheapblues.com/blues-dance-styles/" target="_blank">Dirt Cheap Blues &mdash; Blues Dance Styles</a> &mdash; slow drag, struttin&rsquo;, and other idioms; improvisation-based nature.</li>
+    <li><a href="https://www.bluescentral.org/blues-dancing-technique/" target="_blank">bluesCENTRAL &mdash; Blues Dancing Technique</a> &mdash; pulse-based movement; musical interpretation depth.</li>
+</ul>
+
+<h3>Cali Style Salsa</h3>
+<ul>
+    <li><a href="https://thedancedojo.com/salsa-dance-terms/colombian-style-salsa-calena/" target="_blank">The Dance Dojo &mdash; Colombian Style Salsa (Salsa Cale&ntilde;a)</a> &mdash; repique footwork; pachanga and boogaloo influences; speed challenge.</li>
+    <li><a href="https://www.salsaforums.com/threads/cali-style-salsa-is-much-harder-for-follows.36771/" target="_blank">SalsaForums &mdash; Cali Style Salsa Is Much Harder for Follows</a> &mdash; follower difficulty; fast footwork demands.</li>
+    <li><a href="https://thedancedojo.com/salsa-styles/" target="_blank">The Dance Dojo &mdash; Salsa Styles Comparison</a> &mdash; Cali style vs. LA/NY/Cuban; speed as defining characteristic.</li>
+    <li><a href="https://folklife.si.edu/magazine/la-vieja-guardia-salsa-dancing-cali-colombia" target="_blank">Smithsonian Folklife &mdash; Salsa Dancing in Cali, Colombia</a> &mdash; cultural context; &ldquo;La capital mundial de la salsa.&rdquo;</li>
+</ul>
+
+<h3>Ballroom (Standard)</h3>
+<ul>
+    <li><a href="https://www.justdanzehouston.com/post/levels-of-ballroom-dancing" target="_blank">Just Danze Houston &mdash; Levels of Ballroom Dancing: From Bronze to Gold Mastery</a> &mdash; syllabus progression timelines; 100&ndash;500 hours for Bronze depending on scope.</li>
+    <li><a href="https://byyoursidedancestudio.com/what-is-the-ballroom-dancing-medal-system-and-how-does-it-work/" target="_blank">By Your Side Dance Studio &mdash; The Ballroom Dancing Medal System</a> &mdash; medal/syllabus system explanation.</li>
+    <li><a href="https://delta.dance/2015/01/slow-foxtrot-a-stroll-in-the-moonlight/" target="_blank">Delta.Dance &mdash; Slow Foxtrot: A Stroll in the Moonlight</a> &mdash; &ldquo;most challenging of the Standard dances&rdquo;; control and seamless movement required.</li>
+    <li><a href="https://www.dance-forums.com/threads/order-of-learning-dances.51390/" target="_blank">Dance-Forums.com &mdash; Order of Learning Dances?</a> &mdash; multi-dance learning; waltz recommended first; cross-dance skills transfer.</li>
+    <li><a href="https://www.dance-forums.com/threads/what-is-the-most-difficult-ballroom-dance.2544/" target="_blank">Dance-Forums.com &mdash; What Is the Most Difficult Ballroom Dance?</a> &mdash; community debate on ballroom dance difficulty ranking.</li>
 </ul>
 
 <p style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #eee; color: #888; font-size: 13px;">Built with Plotly. Curve data compiled from dance community forums, instructor resources, and online discussions (March 2026).</p>
