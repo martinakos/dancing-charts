@@ -238,9 +238,13 @@ index_html = """<!DOCTYPE html>
 <style>
 html, body { margin: 0; padding: 0; height: auto !important; overflow: auto !important; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333; line-height: 1.6; }
-#chart-container { width: 100%; height: calc(100vh - 80px); margin-bottom: 0; }
+#chart-container { width: 100%; height: calc(100vh - 80px); min-height: 500px; margin-bottom: 0; }
 #chart-container .plotly-graph-div { height: 100% !important; width: 100% !important; }
 #chart-container .js-plotly-plot, #chart-container .plot-container { height: 100% !important; }
+@media (max-width: 768px) {
+    #chart-container { height: auto; min-height: 85vh; }
+    .content-below { padding: 0 16px 32px 16px !important; }
+}
 </style>
 <script data-goatcounter="https://dancing-charts.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
@@ -250,14 +254,43 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helve
 """ + chart_html + """
 </div>
 <script>
-// Resize Plotly chart to fill the container after render
+// Resize Plotly chart and adapt layout for mobile
 (function() {
     function resizeChart() {
         var container = document.getElementById('chart-container');
         var gd = container.querySelector('.plotly-graph-div');
-        if (gd && window.Plotly) {
-            Plotly.relayout(gd, { height: container.clientHeight });
+        if (!gd || !window.Plotly) return;
+
+        var isMobile = window.innerWidth <= 768;
+        var update = { height: container.clientHeight };
+
+        if (isMobile) {
+            // Move legend below chart, reduce margins
+            update['legend.orientation'] = 'h';
+            update['legend.y'] = -0.35;
+            update['legend.yanchor'] = 'top';
+            update['legend.x'] = 0.5;
+            update['legend.xanchor'] = 'center';
+            update['margin.r'] = 20;
+            update['margin.l'] = 50;
+            update['margin.t'] = 100;
+            update['margin.b'] = 160;
+            update['title.font.size'] = 18;
+        } else {
+            // Restore desktop layout
+            update['legend.orientation'] = 'v';
+            update['legend.y'] = 0.9;
+            update['legend.yanchor'] = 'top';
+            update['legend.x'] = undefined;
+            update['legend.xanchor'] = undefined;
+            update['margin.r'] = 180;
+            update['margin.l'] = undefined;
+            update['margin.t'] = 130;
+            update['margin.b'] = 40;
+            update['title.font.size'] = 28;
         }
+
+        Plotly.relayout(gd, update);
     }
     // Run after Plotly renders and on window resize
     setTimeout(resizeChart, 100);
@@ -265,7 +298,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helve
 })();
 </script>
 
-<div style="padding: 0 40px 40px 40px;">
+<div class="content-below" style="padding: 0 40px 40px 40px;">
 
 <h2 style="border-bottom: 2px solid #ddd; padding-bottom: 8px;">Learning Difficulty Summary</h2>
 
